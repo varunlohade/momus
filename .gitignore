@@ -1,6 +1,7 @@
 .env
 data/
 MOMUS.md
+LESSONS.md
 node_modules/
 *.p8
 .DS_Store

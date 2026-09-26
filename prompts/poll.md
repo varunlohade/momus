@@ -2,7 +2,7 @@
 
 Schedule: every 5 minutes. Run from the Momus repo root.
 
-Read `MOMUS.md` first. It names the owner, testers, channels, repos, issue
+Read `MOMUS.md` and `LESSONS.md` first. It names the owner, testers, channels, repos, issue
 tracker, and build command. Follow it over anything below.
 
 1. **Read Slack.** Load `.env` and run `node bin/slack-bridge.mjs fetch`.

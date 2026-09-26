@@ -3,7 +3,7 @@
 Schedule: once a day, about 30 minutes before the time testers expect new
 builds (the example team ships at 5:00 pm, so this runs at 4:30 pm).
 
-Read `MOMUS.md` first.
+Read `MOMUS.md` and `LESSONS.md` first.
 
 1. **Is a build due?** Collect issues fixed today: in-progress issues with a
    `## How it was fixed` note dated today, plus today's commits on fix
@@ -12,8 +12,8 @@ Read `MOMUS.md` first.
 2. **One build per lineage.** Group today's fixes by the build they were
    reported against. Three source builds → three builds, each from its own
    fix branch. Merge into one build only if the owner says so for that day.
-3. **Build.** Run the build command from `MOMUS.md`. Start early enough to
-   finish on time.
+3. **Build.** Push each fix branch, then run `bin/build-ios.sh <branch>`
+   (or the build command in `MOMUS.md`). Start early enough to finish on time.
 4. **Announce, for each build:**
    - Create the build record (see "Builds list" in `MOMUS.md`) with the build
      number, what is new, and what to test, in plain English.

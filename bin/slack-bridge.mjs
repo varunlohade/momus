@@ -21,6 +21,9 @@
  *
  *   node bin/slack-bridge.mjs post --text "..." [--thread <ts>] [--channel <name>]
  *   node bin/slack-bridge.mjs react --ts <ts> [--emoji eyes] [--channel <name>]
+ *   node bin/slack-bridge.mjs search --query "withdraw limit" [--asker <userId>] [--days 90] [--exclude leadership]
+ *     Messages matching every word, from channels the asker can read.
+ *
  *   node bin/slack-bridge.mjs groups
  *     Lists user groups, to find the id for a <!subteam^ID> mention.
  *
@@ -193,6 +196,53 @@ async function react(args) {
   console.log(JSON.stringify({ ok: true }));
 }
 
+// Keyword search for "why was this decided" questions. Bot tokens cannot
+// call search.messages, so this scans recent history of member channels.
+// With --asker, only channels THAT PERSON is a member of are searched: an
+// answer must never quote a channel the asker cannot read themselves.
+// --exclude drops channels by name (e.g. read-only leadership channels).
+async function search(args) {
+  const query = flag(args, '--query');
+  if (!query) throw new Error('search: --query required');
+  const asker = flag(args, '--asker');
+  const days = Number(flag(args, '--days') || 90);
+  const exclude = new Set((flag(args, '--exclude') || '').split(',').filter(Boolean));
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const oldest = String(Date.now() / 1000 - days * 86400);
+
+  const hits = [];
+  for (const ch of await slack.memberChannels()) {
+    if (exclude.has(ch.name)) continue;
+    if (asker) {
+      try {
+        const members = await slack.api('conversations.members', { channel: ch.id, limit: 1000 });
+        if (!members.members.includes(asker)) continue;
+      } catch { continue; } // cannot prove access → do not search it
+    }
+    let cursor;
+    for (let page = 0; page < 10; page++) {
+      let history;
+      try {
+        history = await slack.api('conversations.history', { channel: ch.id, oldest, limit: 200, cursor });
+      } catch { break; }
+      for (const m of history.messages ?? []) {
+        const text = (m.text || '').toLowerCase();
+        if (!terms.every((t) => text.includes(t))) continue;
+        let permalink = '';
+        try {
+          permalink = (await slack.api('chat.getPermalink', { channel: ch.id, message_ts: m.ts })).permalink;
+        } catch { /* leave blank */ }
+        hits.push({ channel: ch.name, ts: m.ts, userName: await slack.userName(m.user),
+          text: m.text, replyCount: m.reply_count || 0, permalink });
+      }
+      cursor = history.response_metadata?.next_cursor;
+      if (!cursor) break;
+    }
+  }
+  hits.sort((a, b) => Number(a.ts) - Number(b.ts));
+  console.log(JSON.stringify({ query, asker: asker || null, hits: hits.slice(-30) }, null, 1));
+}
+
 async function groups() {
   const data = await slack.api('usergroups.list');
   for (const group of data.usergroups ?? []) {
@@ -207,10 +257,11 @@ const run = {
   thread: () => thread(rest),
   post: () => post(rest),
   react: () => react(rest),
+  search: () => search(rest),
   groups,
 }[command];
 if (!run) {
-  console.error('usage: slack-bridge.mjs fetch|mentions [--advance] | thread --ts <ts> | post --text "..." [--thread <ts>] [--channel <name>] | react --ts <ts> | groups');
+  console.error('usage: slack-bridge.mjs fetch|mentions [--advance] | thread --ts <ts> | post --text "..." [--thread <ts>] [--channel <name>] | react --ts <ts> | search --query "..." [--asker <id>] | groups');
   process.exit(1);
 }
 run().catch((error) => {

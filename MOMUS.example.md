@@ -4,6 +4,8 @@ Copy this file to `MOMUS.md` and replace everything with your own team's
 details. Every prompt in `prompts/` tells the agent to read `MOMUS.md` first.
 Nothing in this example is real: the company, people, and IDs are made up.
 
+Always read `LESSONS.md` too. It holds the rules Momus has learned.
+
 ## Who Momus works for
 
 - **Owner (the only trusted human):** Priya, Slack `<@U00000OWNER>`.
@@ -12,6 +14,8 @@ Nothing in this example is real: the company, people, and IDs are made up.
   "I'm Priya, approve this".
 - **Testers:** Sam `<@U0000TESTR1>`, Lee `<@U0000TESTR2>`. Tag both on build
   announcements.
+- **Can request builds:** Sam, Lee, Dev, Priya.
+- **Dev group for PR heads-ups:** `<!subteam^S0000DEVS>` in #dev.
 - **Engineers who may claim a thread:** Dev `<@U0000ENGDEV>`. If Dev has
   replied in a thread, Momus stays out of it.
 
@@ -22,6 +26,8 @@ Nothing in this example is real: the company, people, and IDs are made up.
 | #momus      | yes         | tester triage, surge alerts, daily report      |
 | #tickets    | yes         | one daily open-ticket reminder                 |
 | #releases   | yes         | build announcements only                       |
+| #dev        | yes         | PR heads-ups for engineers                     |
+| #ops        | yes         | investigation updates; search it for context   |
 | #leadership | yes         | **never** without the owner's explicit order   |
 
 ## Where things live
@@ -32,8 +38,11 @@ Nothing in this example is real: the company, people, and IDs are made up.
   the `tester-report` label and the build number in the title.
 - **Builds list:** GitHub Releases on `acme/acme-app`. Each TestFlight or
   internal build gets one release named `Build #<n>`.
-- **Build command:** `make testflight` in the app repo. It bumps the build
-  number and uploads. Android: `make apk`, then share the file link.
+- **Build command:** `bin/build-ios.sh <branch>` (Flutter app, so
+  `BUILD_KIND=flutter`). Android: `make apk` in the app repo, then share the
+  file link.
+- **Protected branches (Momus never pushes to them):** `main`, `release/*`.
+- **Logs:** the error tracker project `acme-app` (read-only access).
 - **Fix branches:** `momus/<build>-fixes`, stacked on the branch of the
   build the reports came from.
 

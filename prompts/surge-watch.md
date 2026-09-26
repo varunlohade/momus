@@ -14,6 +14,8 @@ Run `node bin/surge-watch.mjs` and read the JSON.
 - Then read two or three example tickets from the theme and add ONE thread
   reply that sums up what people describe. No names, emails, phone numbers,
   ticket ids, or quotes.
+- Then follow `prompts/investigate.md` for the top theme: find the cause,
+  open a PR if it is our code, and tell the engineers.
 - Script error → retry once. Two failed hours in a row → tell the owner.
 - The script cools each theme down on its own. Do not re-post a theme inside
   its cooldown, even if asked.

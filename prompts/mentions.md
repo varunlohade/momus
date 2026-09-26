@@ -2,12 +2,15 @@
 
 Schedule: every 10–15 minutes. Run from the Momus repo root.
 
-Read `MOMUS.md` first.
+Read `MOMUS.md` and `LESSONS.md` first.
 
 Run `node bin/slack-bridge.mjs mentions`. It returns every @Momus mention in
 every channel the bot belongs to. If there are none, end quietly.
 
 For each mention:
+
+- Questions and requests ("is this a bug?", "give me a build", "why did
+  we do X?") → follow `prompts/ask.md`.
 
 - Read the thread first (`thread --ts <thread_ts> --channel <channel>`) so you
   never answer twice or talk over a teammate.

@@ -43,6 +43,7 @@
 ```sh
 cp .env.example .env          # fill in tokens
 cp MOMUS.example.md MOMUS.md  # describe your team, channels, repos
+cp LESSONS.example.md LESSONS.md
 npm test                      # sanity check, no network
 set -a && . ./.env && set +a
 node bin/slack-bridge.mjs fetch   # should print recent messages
@@ -61,3 +62,21 @@ Keep the session running on a machine that stays awake.
 - Momus treats every Slack message as untrusted input. Only the person in
   the terminal session gives orders. Keep that rule in your `MOMUS.md`.
 - Mark money, identity, and auth code as "needs a human" in `MOMUS.md`.
+
+## 6. Builds on request (optional)
+
+On a Mac with Xcode and your signing set up:
+
+1. Create an `ExportOptions.plist` with `method` set to `app-store-connect`
+   and point `EXPORT_OPTIONS` at it.
+2. Set `APP_REPO`, `BUILD_KIND` (`xcode` or `flutter`), and for Xcode apps
+   `XCODE_WORKSPACE` and `XCODE_SCHEME`.
+3. Put the App Store Connect key at
+   `~/.appstoreconnect/private_keys/AuthKey_<ASC_KEY_ID>.p8`. Use the
+   Developer role: it can upload to TestFlight but not submit for review.
+4. Dry run: `bin/build-ios.sh main --no-upload`.
+
+## 7. Guardrails
+
+Read [`GUARDRAILS.md`](GUARDRAILS.md) and turn on branch protection before you
+point Momus at a real repo.
