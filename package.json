@@ -1,0 +1,11 @@
+{
+  "name": "momus",
+  "version": "1.0.0",
+  "description": "An always-on AI teammate for small app teams: triages tester reports in Slack, fixes bugs in batches, watches support and the app stores.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/"
+  }
+}

@@ -1,0 +1,6 @@
+{
+ "checkedAt": "2026-01-01T04:47:00.000Z",
+ "transitions": ["ios_approved", "ios_state:IN_REVIEW->PENDING_DEVELOPER_RELEASE"],
+ "ios": { "version": "2.4.0", "state": "PENDING_DEVELOPER_RELEASE", "approved": true },
+ "android": { "liveVersion": "2.3.1", "listed": true }
+}

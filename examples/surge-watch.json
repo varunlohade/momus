@@ -1,0 +1,12 @@
+{
+ "checkedAt": "2026-01-01T10:00:00.000Z",
+ "windowMin": 120,
+ "freshCount": 14,
+ "updatedInWindow": 22,
+ "baselinePerHour": 2.1,
+ "themeCounts": { "funds-stuck": 7, "login": 2 },
+ "alerts": [
+  { "kind": "theme", "theme": "funds-stuck", "title": "Deposit or withdrawal stuck", "users": 7, "windowMin": 120 },
+  { "kind": "volume", "perHourNow": 7, "baselinePerHour": 2.1 }
+ ]
+}

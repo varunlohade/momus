@@ -1,0 +1,14 @@
+*Support report for 2026-01-01* (38 tickets):
+
+1. 11 people reported: Login or account access
+2. 7 people reported: Deposit or withdrawal stuck
+3. 5 people reported: Identity check (KYC)
+4. 4 people reported: Other / uncategorised
+5. 3 people reported: Opened a chat but never described a problem
+---PATTERN---
+*Against the last 7 days:*
+1. Up: Login or account access — 11 yesterday, 4 the day before.
+2. Keeps coming back: Identity check (KYC) — 6 of the last 7 days, 29 people that week, 5 yesterday.
+---OTHER---
+1. [ticket 1001] how do I change the language of the app
+2. [ticket 1002] can I get a paper statement for my accountant

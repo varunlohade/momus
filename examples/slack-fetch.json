@@ -1,0 +1,21 @@
+{
+ "channel": "C0000MOMUS",
+ "messages": [
+  {
+   "ts": "1767261600.000100",
+   "thread_ts": "1767261600.000100",
+   "user": "U0000TESTR1",
+   "userName": "Sam",
+   "text": "Build 42 on iPhone: the Send button stays grey after I pick a contact. Works if I go back and pick again.",
+   "files": [{ "name": "send-grey.png", "url": "https://files.slack.com/example", "mimetype": "image/png" }]
+  },
+  {
+   "ts": "1767262200.000200",
+   "thread_ts": "1767258000.000050",
+   "user": "U0000TESTR2",
+   "userName": "Lee",
+   "text": "Re-tested the receipts fix on build 42 — looks good now.",
+   "files": []
+  }
+ ]
+}

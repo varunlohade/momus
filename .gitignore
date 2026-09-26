@@ -1,0 +1,6 @@
+.env
+data/
+MOMUS.md
+node_modules/
+*.p8
+.DS_Store
